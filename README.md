@@ -33,7 +33,7 @@ Para esse projeto nós usamos do MirageJS para simular um backend, até que o ba
    ## Na pasta raiz do projeto execute yarn install
     yarn install
     
-   ## Execute yarn dev
+   ## Execute yarn start
     yarn start
   
   
