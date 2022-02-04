@@ -34,14 +34,28 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
   useEffect(() => {
-    api.get("transactions")
-      .then(response => setTransactions(response.data.transactions));
+      // api.get("transactions")
+      //   .then(response => setTransactions(response.data.transactions));
+
+    getTransaction();
   }, []);
 
+  async function getTransaction() {
+    const response = localStorage.getItem("@transactions");
+
+    if (response) {
+      const data = JSON.parse(response);
+
+      console.log([data]);
+      setTransactions(data);
+    }
+  };
+
   async function createTransaction(transactionInput: TransactionInput) {
-    const response = await api.post("/transactions", {...transactionInput, createdAt: new Date()});
+    const response = await api.post("/transactions", { ...transactionInput, createdAt: new Date() });
     const { transaction } = response.data;
 
+    localStorage.setItem("@transactions", JSON.stringify(transaction));
     setTransactions([...transactions, transaction]);
   };
 
