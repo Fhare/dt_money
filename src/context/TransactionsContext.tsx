@@ -32,7 +32,7 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
     os colchetes [] para o generic o TypeScript entende que irá ser armazenado apenas uma informação.
   */
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
-
+  
   useEffect(() => {
       // api.get("transactions")
       //   .then(response => setTransactions(response.data.transactions));
@@ -46,17 +46,22 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
     if (response) {
       const data = JSON.parse(response);
 
-      console.log([data]);
-      setTransactions(data);
+      setTransactions([...transactions, data]);
     }
+
+    return;
   };
 
   async function createTransaction(transactionInput: TransactionInput) {
-    const response = await api.post("/transactions", { ...transactionInput, createdAt: new Date() });
-    const { transaction } = response.data;
+    // const response = await api.post("/transactions", { ...transactionInput, createdAt: new Date() });
+    // const response = await api.post("/transactions", { ...transactionInput });
+    // const { transaction } = response.data;
 
-    localStorage.setItem("@transactions", JSON.stringify(transaction));
-    setTransactions([...transactions, transaction]);
+    const transaction = {...transactionInput, createdAt: new Date(), id: 1}
+    console.log(transaction);
+
+    // localStorage.setItem("@transactions", JSON.stringify([...transactions, transactionInput]));
+    // setTransactions([...transactions, transaction]);
   };
 
   return (

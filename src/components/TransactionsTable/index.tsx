@@ -20,6 +20,8 @@ export function TransactionsTable() {
 
         <tbody>
           {transactions.map(transaction => {
+            console.log(transaction);
+
             return (
               <tr key={transaction.id}>
                 <td>{transaction.title}</td>
@@ -31,9 +33,9 @@ export function TransactionsTable() {
                 </td>
                 <td>{transaction.category}</td>
                 <td>
-                  {new Intl.DateTimeFormat("pt-BR").format(
+                  {/* {new Intl.DateTimeFormat("pt-BR").format(
                     new Date(transaction.createdAt)
-                  )}
+                  )} */}
                 </td>
               </tr>
             );
