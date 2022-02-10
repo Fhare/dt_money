@@ -7,19 +7,6 @@ interface HeaderProps {
 };
 
 export function Header({ onOpenNewTransactionModal }: HeaderProps) {
-
-  async function getTransaction() {
-    const response = localStorage.getItem("@transactions");
-
-    if (response) {
-      const data = JSON.parse(response);
-
-      console.log([data]);
-    }
-
-    return;
-  };
-
   return (
     <Container>
       <Content>

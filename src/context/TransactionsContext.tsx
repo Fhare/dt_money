@@ -31,36 +31,34 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
     <TransactionProps[]> Diz que nós iremos armazenar um array de transactions. Se caso nós não passarmos
     os colchetes [] para o generic o TypeScript entende que irá ser armazenado apenas uma informação.
   */
-  const [transactions, setTransactions] = useState<TransactionProps[]>([]);
-  
-  useEffect(() => {
-      // api.get("transactions")
-      //   .then(response => setTransactions(response.data.transactions));
+  const [transactions, setTransactions] = useState<TransactionProps[]>(() => {
+    const transactions = localStorage.getItem("@transactions");
 
-    getTransaction();
-  }, []);
-
-  async function getTransaction() {
-    const response = localStorage.getItem("@transactions");
-
-    if (response) {
-      const data = JSON.parse(response);
-
-      setTransactions([...transactions, data]);
+    if (transactions) {
+      return JSON.parse(transactions);
     }
 
-    return;
-  };
+    return [];
+  });
+
+  // useEffect(() => {
+  //     api.get("transactions")
+  //       .then(response => setTransactions(response.data.transactions));
+  // }, []);
 
   async function createTransaction(transactionInput: TransactionInput) {
+    const updatedTransaction = [...transactions];
+
+    const transaction = {...transactionInput, createdAt: Date(), id: Math.random()}
+    updatedTransaction.push(transaction);
+
+    setTransactions(updatedTransaction);
+    localStorage.setItem("@transactions", JSON.stringify(updatedTransaction));
+    
     // const response = await api.post("/transactions", { ...transactionInput, createdAt: new Date() });
     // const response = await api.post("/transactions", { ...transactionInput });
     // const { transaction } = response.data;
-
-    const transaction = {...transactionInput, createdAt: new Date(), id: 1}
-    console.log(transaction);
-
-    // localStorage.setItem("@transactions", JSON.stringify([...transactions, transactionInput]));
+  
     // setTransactions([...transactions, transaction]);
   };
 
