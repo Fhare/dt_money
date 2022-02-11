@@ -35,4 +35,11 @@ export const Container = styled.div`
       }
     }
   }
+
+  .span-msg {
+    display: block;
+    text-align: center;
+    color: var(--text-body);
+    font-size: 0.9rem;
+  }
 `;
